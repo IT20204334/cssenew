@@ -9,6 +9,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+const orders = require("./Routes/Order.routes");
+app.use("/api/order", orders);
+
 const port = process.env.PORT || 5000;
 
 mongoose.connect(process.env.DB_CONNECT, (err) => {
