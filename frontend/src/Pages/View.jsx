@@ -3,9 +3,12 @@ import { Button, Table, Input, Popconfirm, message, Typography } from "antd";
 import moment from "moment";
 import { useState } from "react";
 
+import useRequest from "../../services/RequestContext";
+
 const View = () => {
   const [data, setData] = useState([]);
-
+  const [loading, setLoading] = useState(false);
+  const { request } = useRequest();
   const fetchView = async () => {
     setLoading(true);
     try {

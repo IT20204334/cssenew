@@ -2,8 +2,12 @@ import React from "react";
 import "./order.css";
 import { Button, DatePicker, Form, Input, InputNumber, message } from "antd";
 import FormItem from "antd/lib/form/FormItem";
+import { useNavigate } from "react-router-dom";
 
-const singleOrder = () => {
+const SingleOrder = () => {
+  const { request } = useRequest();
+  const navigate = useNavigate();
+
   const onFinish = async values => {
     try {
       console.log("xx", values);
@@ -86,4 +90,4 @@ const singleOrder = () => {
     </div>
   );
 };
-export default singleOrder;
+export default SingleOrder;
