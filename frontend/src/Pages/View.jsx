@@ -6,6 +6,21 @@ import { useState } from "react";
 const View = () => {
   const [data, setData] = useState([]);
 
+  const fetchView = async () => {
+    setLoading(true);
+    try {
+      const res = await request.get("Order");
+      if (res.status === 200) {
+        //console.log('data', res.data);
+        setData(res.data);
+      }
+    } catch (e) {
+      console.log("error fetching View!", e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const columns = [
     {
       title: "Meterials",

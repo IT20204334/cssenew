@@ -4,6 +4,18 @@ import { Button, DatePicker, Form, Input, InputNumber, message } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 
 const singleOrder = () => {
+  const onFinish = async values => {
+    try {
+      console.log("xx", values);
+      const res = await request.post("order/add", values);
+      if (res.status === 201) {
+        message.success("Professional Customer Added Successfully!");
+        navigate("/order", { replace: true });
+      }
+    } catch (e) {
+      console.log("error adding data", e);
+    }
+  };
   return (
     <div>
       <title>View Single Order</title>
