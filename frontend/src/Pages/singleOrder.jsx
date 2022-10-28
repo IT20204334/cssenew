@@ -1,16 +1,17 @@
 import React from "react";
 import "./order.css";
 import { Button, DatePicker, Form, Input, InputNumber, message } from "antd";
-import FormItem from "antd/lib/form/FormItem";
+import useRequest from "../Services/RequestContext";
 
-const singleOrder = () => {
-  const onFinish = async values => {
+const SingleOrder = () => {
+  const { request } = useRequest();
+  const onFinish = async (values) => {
     try {
       console.log("xx", values);
       const res = await request.post("order/add", values);
       if (res.status === 201) {
         message.success("Professional Customer Added Successfully!");
-        navigate("/order", { replace: true });
+        // navigate("/order", { replace: true });
       }
     } catch (e) {
       console.log("error adding data", e);
@@ -33,7 +34,7 @@ const singleOrder = () => {
             name="suppliers"
             label="Suppliers"
             rules={[
-              { required: true, message: "Please input your Suppliers!" }
+              { required: true, message: "Please input your Suppliers!" },
             ]}
           >
             <Input placeHolder="Enter Suppliers" />
@@ -51,7 +52,7 @@ const singleOrder = () => {
             name="deliveryDate"
             label="Delivery Date"
             rules={[
-              { required: true, message: "Please input your Join Date!" }
+              { required: true, message: "Please input your Join Date!" },
             ]}
           >
             <DatePicker placeHolder="Enter Date" style={{ width: "50%" }} />
@@ -65,7 +66,7 @@ const singleOrder = () => {
             <InputNumber min={1} max={10} />
           </Form.Item>
 
-          <FormItem></FormItem>
+          <Form.Item></Form.Item>
           <Form.Item>
             <div className="accbtn">
               <Button type="primary" htmlType="submit">
@@ -86,4 +87,4 @@ const singleOrder = () => {
     </div>
   );
 };
-export default singleOrder;
+export default SingleOrder;

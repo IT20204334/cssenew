@@ -1,17 +1,20 @@
-import React from "react";
-import { Button, Table, Input, Popconfirm, message, Typography } from "antd";
+import React, { useCallback, useEffect } from "react";
+import { Button, Table } from "antd";
 import moment from "moment";
 import { useState } from "react";
+import useRequest from "../Services/RequestContext";
 
 const View = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState();
+  const { request } = useRequest();
 
-  const fetchView = async () => {
+  const fetchView = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await request.get("Order");
+      const res = await request.get("order");
       if (res.status === 200) {
-        //console.log('data', res.data);
+        console.log("data", res.data);
         setData(res.data);
       }
     } catch (e) {
@@ -19,23 +22,27 @@ const View = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [request]);
+
+  useEffect(() => {
+    fetchView();
+  }, [fetchView]);
 
   const columns = [
     {
       title: "Meterials",
-      dataIndex: "meterials",
-      key: "meterials"
+      dataIndex: "materials",
+      key: "materials",
     },
     {
-      title: "Budjet(LRK)",
-      dataIndex: "budjet",
-      key: "budjet"
+      title: "Budget(LRK)",
+      dataIndex: "budget",
+      key: "budget",
     },
     {
       title: "Suppliers",
-      dataIndex: "suppliers",
-      key: "suppliers"
+      dataIndex: "supplier",
+      key: "supplier",
     },
 
     {
@@ -48,12 +55,17 @@ const View = () => {
             <Button>View</Button>
           </div>
         </>
-      )
-    }
+      ),
+    },
   ];
   return (
     <div className="tableContainer">
-      <Table dataSource={data} columns={columns} />
+      <Table
+        loading={loading}
+        dataSource={data}
+        columns={columns}
+        rowKey={(record) => record._id}
+      />
     </div>
   );
 };
