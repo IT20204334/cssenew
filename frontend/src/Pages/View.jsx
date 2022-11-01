@@ -1,20 +1,22 @@
-import React from "react";
-import { Button, Table, Input, Popconfirm, message, Typography } from "antd";
+import React, { useCallback, useEffect } from "react";
+import { Button, Table } from "antd";
 import moment from "moment";
 import { useState } from "react";
-
-import useRequest from "../../services/RequestContext";
+import useRequest from "../Services/RequestContext";
+import { useNavigate } from "react-router-dom";
 
 const View = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState();
   const { request } = useRequest();
-  const fetchView = async () => {
+  const navigate = useNavigate();
+
+  const fetchView = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await request.get("Order");
+      const res = await request.get("order");
       if (res.status === 200) {
-        //console.log('data', res.data);
+        console.log("data", res.data);
         setData(res.data);
       }
     } catch (e) {
@@ -22,23 +24,27 @@ const View = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [request]);
+
+  useEffect(() => {
+    fetchView();
+  }, [fetchView]);
 
   const columns = [
     {
       title: "Meterials",
-      dataIndex: "meterials",
-      key: "meterials"
+      dataIndex: "materials",
+      key: "materials"
     },
     {
-      title: "Budjet(LRK)",
-      dataIndex: "budjet",
-      key: "budjet"
+      title: "Budget(LRK)",
+      dataIndex: "budget",
+      key: "budget"
     },
     {
       title: "Suppliers",
-      dataIndex: "suppliers",
-      key: "suppliers"
+      dataIndex: "supplier",
+      key: "supplier"
     },
 
     {
@@ -48,15 +54,29 @@ const View = () => {
       render: (_, record) => (
         <>
           <div className="actionGrp">
-            <Button>View</Button>
+            <Button
+              style={{ backgroundClor: "blue" }}
+              onClick={() => navigate(`/SingleOrder/${record._id}`)}
+            >
+              View
+            </Button>
           </div>
         </>
       )
     }
   ];
   return (
-    <div className="tableContainer">
-      <Table dataSource={data} columns={columns} />
+    <div>
+      <h1> Quotions </h1>
+
+      <div className="tableContainer">
+        <Table
+          loading={loading}
+          dataSource={data}
+          columns={columns}
+          rowKey={record => record._id}
+        />
+      </div>
     </div>
   );
 };

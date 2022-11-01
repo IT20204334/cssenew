@@ -1,93 +1,95 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./order.css";
-import { Button, DatePicker, Form, Input, InputNumber, message } from "antd";
-import FormItem from "antd/lib/form/FormItem";
-import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  DatePicker,
+  Input,
+  InputNumber,
+  message,
+  Card,
+  Typography,
+  Col,
+  Row,
+  size
+} from "antd";
+import useRequest from "../Services/RequestContext";
+import { useParams } from "react-router-dom";
 
 const SingleOrder = () => {
   const { request } = useRequest();
-  const navigate = useNavigate();
+  const { Text } = Typography;
+  const { id } = useParams();
+  const [order, setOrder] = useState();
 
-  const onFinish = async values => {
+  const getOrder = async () => {
     try {
-      console.log("xx", values);
-      const res = await request.post("order/add", values);
-      if (res.status === 201) {
-        message.success("Professional Customer Added Successfully!");
-        navigate("/order", { replace: true });
+      const res = await request.get(`order/${id}`);
+      if (res.status === 200) {
+        setOrder(res.data);
       }
     } catch (e) {
       console.log("error adding data", e);
     }
   };
+  useEffect(() => {
+    getOrder();
+  });
+
   return (
-    <div>
-      <title>View Single Order</title>
-      <div style={{ width: 700 }}>
-        <Form layout="vertical">
-          <Form.Item
-            name="meterials"
-            label="Meterials"
-            rules={[{ required: true, message: "Please input Meterials!" }]}
+    <>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {order && (
+          <Card
+            className="box"
+            title="View Single Order"
+            bordered={false}
+            bodyStyle={{ fontSize: 20 }}
+            headStyle={{ fontSize: 28, textAlign: "center", margin: 70 }}
           >
-            <Input placeHolder="Enter Meterials" />
-          </Form.Item>
-
-          <Form.Item
-            name="suppliers"
-            label="Suppliers"
-            rules={[
-              { required: true, message: "Please input your Suppliers!" }
-            ]}
-          >
-            <Input placeHolder="Enter Suppliers" />
-          </Form.Item>
-
-          <Form.Item
-            name="deliverySite"
-            label="Delivery Site"
-            rules={[{ required: true, message: "Please input Delivery Site!" }]}
-          >
-            <Input placeHolder="Enter Delivery Site" />
-          </Form.Item>
-
-          <Form.Item
-            name="deliveryDate"
-            label="Delivery Date"
-            rules={[
-              { required: true, message: "Please input your Join Date!" }
-            ]}
-          >
-            <DatePicker placeHolder="Enter Date" style={{ width: "50%" }} />
-          </Form.Item>
-
-          <Form.Item
-            name="quantity"
-            label="Quantity"
-            rules={[{ required: true, message: "Please input Quantity!" }]}
-          >
-            <InputNumber min={1} max={10} />
-          </Form.Item>
-
-          <FormItem></FormItem>
-          <Form.Item>
-            <div className="accbtn">
-              <Button type="primary" htmlType="submit">
-                Accept
-              </Button>
-            </div>
-          </Form.Item>
-
-          <Form.Item>
-            <div className="decbtn">
-              <Button type="primary" htmlType="submit">
-                Decline
-              </Button>
-            </div>
-          </Form.Item>
-        </Form>
+            <Row gutter={[24, 24]}>
+              <Col span={12}>
+                <Text>Meterials : {order.materials}</Text>
+              </Col>
+              <Col span={12}>
+                <Text>Suppliers : {order.supplier}</Text>
+              </Col>
+              <Col span={12}>
+                <Text>Delivery Site : {order.deliverySite}}</Text>
+              </Col>
+              <Col span={12}>
+                <Text>Delivery Date : {order.deliveryDate}</Text>
+              </Col>
+              <Col span={12}>
+                <Text>Quantity : {order.quantity}</Text>
+              </Col>
+            </Row>
+          </Card>
+        )}
       </div>
-    </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          margin: 35
+        }}
+      >
+        <div>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ backgroundClor: "blue", size: "large" }}
+          >
+            Accept
+          </Button>
+        </div>
+        <div style={{ marginLeft: "30px" }}>
+          <Button type="primary" htmlType="submit" danger>
+            Decline
+          </Button>
+        </div>
+      </div>
+    </>
   );
 };
 export default SingleOrder;

@@ -10,7 +10,7 @@ export default function MainRoutes() {
     <Routes>
       <Route path="/" element={<Order />} />
       <Route path="/wel" element={<Wel />} />
-      <Route path="/SingleOrder" element={<SingleOrder />} />
+      <Route path="/SingleOrder/:id" element={<SingleOrder />} />
       <Route path="/view" element={<View />} />
     </Routes>
   );
