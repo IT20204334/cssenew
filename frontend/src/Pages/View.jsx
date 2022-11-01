@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from "react";
 import { Button, Table } from "antd";
-import moment from "moment";
 import { useState } from "react";
 import useRequest from "../Services/RequestContext";
 import { useNavigate } from "react-router-dom";
@@ -34,17 +33,17 @@ const View = () => {
     {
       title: "Meterials",
       dataIndex: "materials",
-      key: "materials"
+      key: "materials",
     },
     {
       title: "Budget(LRK)",
       dataIndex: "budget",
-      key: "budget"
+      key: "budget",
     },
     {
       title: "Suppliers",
       dataIndex: "supplier",
-      key: "supplier"
+      key: "supplier",
     },
 
     {
@@ -55,26 +54,27 @@ const View = () => {
         <>
           <div className="actionGrp">
             <Button
-              style={{ backgroundClor: "blue" }}
+              type="primary"
               onClick={() => navigate(`/SingleOrder/${record._id}`)}
             >
               View
             </Button>
           </div>
         </>
-      )
-    }
+      ),
+    },
   ];
   return (
     <div>
-      <h1> Quotions </h1>
+      <h1> Orders </h1>
 
       <div className="tableContainer">
         <Table
+          data-testid="ordersTable"
           loading={loading}
           dataSource={data}
           columns={columns}
-          rowKey={record => record._id}
+          rowKey={(record) => record._id}
         />
       </div>
     </div>

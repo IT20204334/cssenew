@@ -1,5 +1,11 @@
-import React, { useState, createContext, useContext, useMemo, useEffect } from 'react';
-import axios from 'axios';
+import React, {
+  useState,
+  createContext,
+  useContext,
+  useMemo,
+  useEffect,
+} from "react";
+import axios from "axios";
 
 export const RequestContext = createContext({});
 
@@ -10,15 +16,15 @@ export const RequestContextProvider = (props) => {
   const UpdateToken = async (value) => {
     if (value) {
       setToken(value);
-      localStorage.setItem('token', value);
+      localStorage.setItem("token", value);
     } else {
       setToken(undefined);
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
     }
   };
   useEffect(() => {
     if (!token) {
-      const newToken = localStorage.getItem('token');
+      const newToken = localStorage.getItem("token");
       UpdateToken(newToken);
     }
   }, [token]);
@@ -28,26 +34,26 @@ export const RequestContextProvider = (props) => {
       return axios.create({
         baseURL,
         timeout: 10000,
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
     }
     if (token === undefined) {
       return axios.create({
         baseURL,
         timeout: 10000,
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
     }
     return axios.create({
       baseURL,
-      timeout: 10000
+      timeout: 10000,
     });
   }, [baseURL, token]);
 
   return (
-      <RequestContext.Provider value={{ request, token, UpdateToken }}>
-        {children}
-      </RequestContext.Provider>
+    <RequestContext.Provider value={{ request, token, UpdateToken }}>
+      {children}
+    </RequestContext.Provider>
   );
 };
 
