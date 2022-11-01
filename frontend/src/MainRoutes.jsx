@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Order from "./Pages/Order";
 import Wel from "./Pages/wel";
-import SingleOrder from "./Pages/singleOrder";
+import SingleOrder from "./Pages/SingleOrder";
 import View from "./Pages/View";
 
 export default function MainRoutes() {
@@ -10,7 +10,7 @@ export default function MainRoutes() {
     <Routes>
       <Route path="/" element={<Order />} />
       <Route path="/wel" element={<Wel />} />
-      <Route path="/singleOrder" element={<SingleOrder />} />
+      <Route path="/SingleOrder/:id" element={<SingleOrder />} />
       <Route path="/view" element={<View />} />
     </Routes>
   );
