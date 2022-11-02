@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const order = new mongoose.Schema({
-  materials: {
+  material: {
     type: String,
     required: true,
   },
