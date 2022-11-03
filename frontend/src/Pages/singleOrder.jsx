@@ -101,7 +101,7 @@ const SingleOrder = () => {
           >
             <Row gutter={[24, 24]}>
               <Col span={12}>
-                <Text>Materials : {order.materials}</Text>
+                <Text>Material : {order.material}</Text>
               </Col>
               <Col span={12}>
                 <Text>Suppliers : {order.supplier}</Text>

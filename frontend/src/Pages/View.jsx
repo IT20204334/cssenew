@@ -31,9 +31,9 @@ const View = () => {
 
   const columns = [
     {
-      title: "Meterials",
-      dataIndex: "materials",
-      key: "materials",
+      title: "Materials",
+      dataIndex: "material",
+      key: "material",
     },
     {
       title: "Budget(LRK)",
