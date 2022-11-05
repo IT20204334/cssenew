@@ -4,6 +4,7 @@ import moment from "moment";
 import { useState } from "react";
 import useRequest from "../Services/RequestContext";
 import { useNavigate } from "react-router-dom";
+import Nav from "../Components/navbar";
 
 const View = () => {
   const [data, setData] = useState([]);
@@ -66,18 +67,21 @@ const View = () => {
     }
   ];
   return (
-    <div>
-      <h1> Quotions </h1>
+    <>
+      <Nav />
+      <div>
+        <h1> Quotions </h1>
 
-      <div className="tableContainer">
-        <Table
-          loading={loading}
-          dataSource={data}
-          columns={columns}
-          rowKey={record => record._id}
-        />
+        <div className="tableContainer">
+          <Table
+            loading={loading}
+            dataSource={data}
+            columns={columns}
+            rowKey={record => record._id}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default View;
