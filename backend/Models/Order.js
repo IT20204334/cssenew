@@ -39,6 +39,10 @@ const order = new mongoose.Schema({
   declineDescription: {
     type: String,
   },
+  supplierStatus: {
+    type: String,
+    default: "Pending",
+  },
 });
 
 const Order = mongoose.model("order", order);

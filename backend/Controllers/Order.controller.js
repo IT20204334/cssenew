@@ -71,6 +71,23 @@ exports.updateOrderStatus = async (req, res) => {
   }
 };
 
+exports.updateSupplierStatus = async (req, res) => {
+  try {
+    const updateSupplierStatus = await order.updateOne(
+      { _id: req.params.id },
+      {
+        supplierStatus: req.body.supplierStatus,
+        statusUpdateDate: Date.now(),
+      }
+    );
+    console.log("updated ", updateSupplierStatus);
+    res.status(200).send({ message: "success", data: updateSupplierStatus });
+  } catch (e) {
+    console.log("error", e);
+    res.status(500).send({ message: "error", data: e });
+  }
+};
+
 exports.deleteOrder = async (req, res) => {
   try {
     const deleteOrder = await order.findByIdAndDelete(req.params.id);
