@@ -13,4 +13,6 @@ router.put("/:id", order.updateOrder);
 
 router.patch("/:id", order.updateOrderStatus);
 
+router.patch("/supplier/:id", order.updateSupplierStatus);
+
 module.exports = router;
